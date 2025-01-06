@@ -19,7 +19,9 @@
         <!-- place navbar here -->
         <nav class="nav bg-white shadow-sm  justify-content-center">
             <a class="nav-link active" href="{{ route('home') }}" aria-current="page">Dashboard</a>
-            <a class="nav-link" href="{{ route('usuarios') }}">Listado de usuarios</a>
+            @if(Auth::user()->id == 1) 
+                  <a class="nav-link" href="{{ route('usuarios') }}">Listado de usuarios</a>
+            @endif
             <a class="nav-link" href="{{route('listar_clientes')}}">Clientes</a>
         </nav>
     </header>

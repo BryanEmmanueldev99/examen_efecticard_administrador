@@ -10,6 +10,19 @@
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    
+        <style>
+            body{
+                background-color: #fafafa;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+            .frm-registro{
+                width: 500px;
+            }
+        </style>
 </head>
 
 <body>
@@ -31,9 +44,11 @@
             </div>
         @endif
 
-        <div class="container">
+        <div class="container frm-registro">
+            <h2>Crear una cuenta</h2>
+            <small class="p-2 bg-warning mb-3 rounded">Al registrar su cuenta, deberá ser <b>aprobada</b> por el administrador.</small>
             <form method="POST" action="{{ route('registro') }}"
-                class="rounded container w-75 mx-auto shadow-sm mt-5 p-3">
+                class="rounded bg-white mx-auto shadow-sm mt-4 p-3">
                 @csrf
                 <div class="mb-3">
                     <label for="" class="form-label">Nombre</label>

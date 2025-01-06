@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Administrator',
             'email' => 'test@example.com',
             'password' => 1234567,
-            'verified' => 'APROVADO'
+            'verified' => 'APROBADO'
         ]);
     }
 }

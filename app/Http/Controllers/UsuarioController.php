@@ -11,21 +11,27 @@ use Illuminate\Support\Facades\Mail;
 
 class UsuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $aprovacion = Auth::user()->verified;
-        if($aprovacion == 'APROVADO'){
+        if(Auth::user()->verified == 'APROBADO'){
             return view('home.index');
         } else {
-            return view('login.login');
-        }
+            return redirect(route('form_login'));
+        } 
     }
 
     public function listar_usuarios()
     {
+        if(Auth::user()->verified == 'APROBADO'){
+
+            if(Auth::user()->id != 1) {
+                return redirect(route('home'));
+            }
+        
+        } else {
+            return redirect(route('form_login'));
+        } 
+
         //hago una query para ocultar al perfil de administrador, donde solo me muestre todos los usuarios que tengan igual o arriba del id: 2
         $usuarios = User::where('id', '>=', 2)->simplePaginate(25);
         return view('home.auth.usuarios', compact('usuarios'));
@@ -33,8 +39,9 @@ class UsuarioController extends Controller
 
     public function aprobar_usuario($id)
     {
+    
         $usuario = User::findOrFail($id);
-        $usuario->verified = 'APROVADO';
+        $usuario->verified = 'APROBADO';
         $usuario->save();
 
 
@@ -71,13 +78,44 @@ class UsuarioController extends Controller
     
     public function edit($id)
     {
+        if(Auth::user()->verified == 'APROBADO'){
+
+        } else {
+            return redirect(route('form_login'));
+        } 
+
         $usuario = User::findOrFail($id);
         return view('home.usuarios.mi_cuenta', compact('usuario'));
     }
 
+
+    public function admin_edit($id)
+    {
+        if(Auth::user()->verified == 'APROBADO'){
+
+            if(Auth::user()->id != 1) {
+                return redirect(route('home'));
+            }
+        
+        } else {
+            return redirect(route('form_login'));
+        } 
+
+        $usuario = User::findOrFail($id);
+        return view('home.usuarios.edit_usuario', compact('usuario'));
+    }
+
+
     
     public function update(UpdateUserRequest $request, $id)
     {
+        if(Auth::user()->verified == 'APROBADO'){
+    
+
+        } else {
+            return redirect(route('form_login'));
+        } 
+
         $usuario = User::findOrFail($id);
         $usuario->name = $request->name;
         $usuario->email = $request->email;
@@ -96,6 +134,17 @@ class UsuarioController extends Controller
     
     public function destroy(string $id)
     {
-        //
+        if(Auth::user()->verified == 'APROBADO'){
+        
+        } else {
+            return redirect(route('form_login'));
+        } 
+
+        $usuario = User::findOrFail($id);
+        $usuario->delete();
+
+        return redirect()
+                 ->back()
+                 ->with('success_delete','¡Usuario borrado!');
     }
 }

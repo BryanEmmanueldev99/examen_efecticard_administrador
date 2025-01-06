@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsuarioController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,9 +26,14 @@ Route::prefix('/dashboard')->middleware('auth')->group(function() {
         Route::get('/usuarios', [UsuarioController::class, 'listar_usuarios'])->name('usuarios');
         Route::post('/usuarios/verificar/{id}', [UsuarioController::class, 'aprobar_usuario'])->name('aprobar_usuario');
         Route::get('/usuarios/{id}', [UsuarioController::class, 'edit'])->name('mi_cuenta');
+        Route::get('/usuarios/admin/{id}', [UsuarioController::class, 'admin_edit'])->name('user_edit');
         Route::put('/usuarios/{id}', [UsuarioController::class, 'update'])->name('mi_cuenta_update');
+        Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('EliminarUsuario');
         Route::post('/clientes', [ClienteController::class, 'store'])->name('NuevoCliente');
         Route::get('/clientes/create', [ClienteController::class, 'create'])->name('create_clientes');
-        Route::get('/clientes', [ClienteController::class, 'index'])->name('listar_clientes');
+        Route::get('/clientes', [ClienteController::class, 'index'])->name('listar_clientes'); 
+        Route::put('/clientes/{id}', [ClienteController::class, 'update'])->name('ActualizarCliente');
+        Route::delete('/clientes/{id}', [ClienteController::class, 'destroy'])->name('EliminarCliente');
 });
+
 

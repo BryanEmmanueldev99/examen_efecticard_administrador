@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    <title>Registro</title>
+    <title>Login</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -12,6 +12,16 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <!--Sweet Alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body{
+            background-color: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    </style>
 </head>
 
 <body>
@@ -65,10 +75,10 @@
             </script>
         @endif
         <!-- Login -->
-        <div class="container">
-            <form method="POST" action="{{ route('login') }}" class="rounded container w-50 mx-auto shadow-sm mt-5 p-3">
+        <div class="container-fluid">
+            <h1 class="mb-4">Ingresa al sistema</h1>
+            <form method="POST" action="{{ route('login') }}" class="rounded bg-white shadow-sm p-3">
                 @csrf
-
                 <div class="mb-3">
                     <label for="" class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" id="email"

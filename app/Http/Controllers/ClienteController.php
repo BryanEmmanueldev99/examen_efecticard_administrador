@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class ClienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
+        if(Auth::user()->verified == 'APROBADO'){
+        
+        } else {
+            return redirect(route('form_login'));
+        } 
         $endpoint = Http::get('http://127.0.0.1:5000/api/clientes');
         $clientes = $endpoint->json();
         return view('home.clientes.index', compact('clientes'));
@@ -23,12 +27,22 @@ class ClienteController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->verified == 'APROBADO'){
+        
+        } else {
+            return redirect(route('form_login'));
+        } 
         return view('home.clientes.create');
     }
 
     
     public function store(Request $request)
     {
+        if(Auth::user()->verified == 'APROBADO'){
+        
+        } else {
+            return redirect(route('form_login'));
+        } 
         $endpoint = Http::post('http://127.0.0.1:5000/api/clientes', 
         [
                 'nombre' => $request->nombre,
@@ -72,8 +86,9 @@ class ClienteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+         $endpoint = Http::delete('http://127.0.0.1:5000/api/clientes/'.$id);
+         return redirect(route('listar_clientes'))->with('success_delete_cliente', '¡Cliente eliminado!');
     }
 }

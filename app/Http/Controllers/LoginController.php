@@ -29,7 +29,7 @@ class LoginController extends Controller
          $user->name = $request->name;
          $user->email = $request->email;
          $user->password = Hash::make($request->password);
-         $user->verified = 'DESAPROVADO';
+         $user->verified = 'PENDIENTE';
          $user->save();
 
          Auth::login($user);
@@ -45,10 +45,13 @@ class LoginController extends Controller
         
         if (Auth::attempt($credentials)) {
             $aprovacion = Auth::user()->verified;
-            if($aprovacion == 'APROVADO'){
+            if($aprovacion == 'APROBADO'){
                 return redirect(route('home'))
                 ->with('success','¡Haz iniciado sesión correctamente!');
             } else {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
                 return redirect(route('form_login'))
                 ->with('error_provider','¡Se necesita de aprovación, para ingresar!');
             }

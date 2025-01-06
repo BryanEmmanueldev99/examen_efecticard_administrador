@@ -28,7 +28,7 @@
     
     <form class="mt-5 bg-white shadow-sm rounded p-3 w-75 mx-auto" action="{{ route('mi_cuenta_update', $usuario->id) }}"
         method="post">
-        <h2>Editar mis datos</h2>
+        <h2>Actualizar mis datos</h2>
         @csrf
         @method('PUT')
 

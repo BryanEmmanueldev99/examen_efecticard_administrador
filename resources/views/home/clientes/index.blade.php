@@ -13,6 +13,18 @@
             });
         </script>
     @endif
+
+    @if ($success_delete = Session::get('success_delete_cliente'))
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "{{ $success_delete }}",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
             <h1>Listado de clientes</h1>
 
             <div
@@ -38,15 +50,11 @@
                             <td>{{$cliente['email']}}</td>
                             <td>{{$cliente['telefono']}}</td>
                             <td>
-                                <div class="group d-flex">
-                                    <form action="{{route('aprobar_usuario',      $cliente['id'] )
-                                        }}" method="post">
-                                        @csrf
-                                        <input class="btn btn-primary" type="submit" value="Aprobar">
-                                    </form>
-                                    <a href="" class="btn btn-danger">Eliminar</a>
-                                    <a href="" class="btn btn-success">Actualizar</a>
-                                </div>
+                                <form action="{{route('EliminarCliente', $cliente['id'])}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" value="Eliminar" class="btn btn-danger">
+                                </form>
                             </td>
                         </tr>
                         @endforeach
